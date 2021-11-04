@@ -103,7 +103,6 @@ public class PostfixExpression2 {
                 list.add(Variable.getLoad(string));
                 listI32.add("i32");
                 i--;
-                flag = false;
                 continue;
             }
 
@@ -115,7 +114,6 @@ public class PostfixExpression2 {
                 list.add(String.valueOf(num));
                 listI32.add("i32");
                 i--;
-                flag = false;
                 continue;
             }
 
@@ -171,7 +169,6 @@ public class PostfixExpression2 {
 
 //        System.out.println(list);
 
-        int sum = 0;
         boolean flag = false;
         for (int i = 2; list.size() != 1; i++) {
             switch (list.get(i)) {

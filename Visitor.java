@@ -83,7 +83,7 @@ public class Visitor extends lab4BaseVisitor<Void> {
                 funcFlag = false;
             }
             System.out.println("    ret i32 " + s);
-            //endFlag = true;
+            endFlag = true;
         } else if (ctx.block() != null) {
             visit(ctx.block());
         } else if (ctx.cond() != null) {
@@ -98,18 +98,25 @@ public class Visitor extends lab4BaseVisitor<Void> {
             int tempIfNum = ifNum;
             visit(ctx.stmt(0));
             ifNum = tempIfNum;
-            System.out.println("    br label %end" + ifNum);
+            if (endFlag) {
+                endFlag = false;
+            } else {
+                System.out.println("    br label %end" + ifNum);
+            }
 
             System.out.println("false" + ifNum + ":");
             tempIfNum = ifNum;
-            if (ctx.stmt(1)!=null) {
+            if (ctx.stmt(1) != null) {
                 visit(ctx.stmt(1));
             }
             ifNum = tempIfNum;
-            System.out.println("    br label %end" + ifNum);
+            if (endFlag) {
+                endFlag = false;
+            } else {
+                System.out.println("    br label %end" + ifNum);
+            }
 
             System.out.println("end" + ifNum + ":");
-
         } else {
             exp = "";
             visit(ctx.exp());
@@ -177,7 +184,6 @@ public class Visitor extends lab4BaseVisitor<Void> {
                         System.exit(1);
                     }
                     i--;
-                    flag = false;
                 }
             }
             s = new PostfixExpression().func(exp);
